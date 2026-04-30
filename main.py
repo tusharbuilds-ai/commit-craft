@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from api.api import api_router
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
@@ -18,6 +19,11 @@ app.mount("/static",StaticFiles(
     directory="static"),
     name="static"
     )
+
+
+@app.get('/')
+def home():
+    return FileResponse("static/index.html")
 
 
 app.include_router(api_router,prefix="/api")
